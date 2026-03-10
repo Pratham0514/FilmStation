@@ -33,7 +33,7 @@ const postMovies =async (req, res) => {
     // .save() = MongoDB मध्ये data insert करतो
     const savedMovie = await newMovie.save();
 
-    res.json({
+    res.status(201).json({
       status: "ok",
       message: "Movie added successfully",
       data: savedMovie,
@@ -62,7 +62,7 @@ const getMovieById = async (req, res) => {
         message: "Movie fetched successfully",
       });
     } else {
-      return res.json({
+      return res.status(404).json({
         success: false,
         data: null,
         message: "Movie not found",
@@ -70,7 +70,7 @@ const getMovieById = async (req, res) => {
     }
 
   } catch (error) {
-    return res.json({
+    return res.status(500).json({
       success: false,
       data: null,
       message: error.message,
