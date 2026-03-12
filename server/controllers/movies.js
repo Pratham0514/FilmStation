@@ -81,6 +81,41 @@ const getMoviesSearch = async (req, res) => {
   }
 }
 
+// full update
+const putMoviesById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const { title, description, image, category, director, year, language, rating } = req.body;
+
+    const updatedMovie = await Movie.findByIdAndUpdate(
+      id,
+      { title, description, image, category, director, year, language, rating },
+//{ new: true } हा option **Mongoose मध्ये वापरतात जेव्हा आपण
+//findByIdAndUpdate() किंवा findOneAndUpdate() वापरतो.
+      { new: true }
+    );
+
+    if (!updatedMovie) {
+      return res.status(404).json({
+        status: "error",
+        message: "Movie not found",
+      });
+    }
+
+    res.status(200).json({
+      status: "ok",
+      message: "Movie updated successfully",
+      data: updatedMovie,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+};
 
 
 // find by id
@@ -112,4 +147,4 @@ const getMovieById = async (req, res) => {
   }
 };
 
-export { getMovies , postMovies ,getMovieById,getMoviesSearch};
+export { getMovies , postMovies ,getMovieById,getMoviesSearch ,putMoviesById};

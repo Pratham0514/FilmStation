@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
-import { getMovies , postMovies ,getMovieById,getMoviesSearch} from "./controllers/movies.js";
+import { getMovies , postMovies ,getMovieById,getMoviesSearch,putMoviesById} from "./controllers/movies.js";
 dotenv.config();
 
 const app = express();
@@ -10,6 +10,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+//databasse connection
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGODB_URL);
@@ -43,8 +44,9 @@ app.get("/movie/search", getMoviesSearch);
 // find by id
 app.get("/movie/:id", getMovieById);
 
+// full update
 
-
+app.put("/movies/:id", putMoviesById);
 
 const PORT = process.env.PORT || 8080;
 
