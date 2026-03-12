@@ -19,7 +19,7 @@ const getMovies =async (req, res) => {
   }
 };
 
-// show all movies
+// Adding movie
 const postMovies =async (req, res) => {
   try {
 
@@ -48,6 +48,40 @@ const postMovies =async (req, res) => {
 
   }
 };
+// /search?title=abc 
+const getMoviesSearch = async (req, res) => {
+
+  const { title } = req.query;
+
+  let movies;
+
+  if (!title) {
+    movies = await Movie.find();   // title नसल्यास सर्व movies
+  } else {
+    movies = await Movie.find({
+      $or: [
+        { title: { $regex: title, $options: "i" } },
+        { description: { $regex: title, $options: "i" } }
+      ]
+    });
+  }
+
+  if (movies.length === 0) {
+    return res.status(404).json({
+      success: false,
+      data: null,
+      message: "Movie not found",
+    });
+  } else {
+    return res.json({
+      success: true,
+      data: movies,
+      message: "Movie fetched successfully",
+    });
+  }
+}
+
+
 
 // find by id
 const getMovieById = async (req, res) => {
@@ -78,4 +112,4 @@ const getMovieById = async (req, res) => {
   }
 };
 
-export { getMovies , postMovies ,getMovieById };
+export { getMovies , postMovies ,getMovieById,getMoviesSearch};

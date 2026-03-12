@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
-import { getMovies , postMovies ,getMovieById} from "./controllers/movies.js";
+import { getMovies , postMovies ,getMovieById,getMoviesSearch} from "./controllers/movies.js";
 dotenv.config();
 
 const app = express();
@@ -36,6 +36,9 @@ app.post("/movie",postMovies);
 // show all movies
 
 app.get("/movies",getMovies);
+
+// search movie
+app.get("/movie/search", getMoviesSearch);
 
 // find by id
 app.get("/movie/:id", getMovieById);
