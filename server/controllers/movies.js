@@ -27,9 +27,16 @@ const postMovies =async (req, res) => {
 
     const { title, description, image, category, director, year, language, rating } = req.body;
 
+    if(!title || !description || !image || !category || !director || !year || !language || !rating){
+      return res.status(400).json({
+        status: "error",
+        message: "All fields are required",
+      });
+    }
+
     //new Movie() म्हणजे: Database मध्ये save करण्यासाठी नवीन movie object तयार करणे
     const newMovie = new Movie({ title, description, image, category, director, year, language,rating, });
-
+    
     // .save() = MongoDB मध्ये data insert करतो
     const savedMovie = await newMovie.save();
 
@@ -117,6 +124,45 @@ const putMoviesById = async (req, res) => {
   }
 };
 
+// partial update rating 
+const patchMoviesRatingById =async (req, res) => {
+  const { id } = req.params;
+  try{
+
+    const { rating } = req.body;
+    if(rating < 0 || rating > 10){
+      return res.status(400).json({
+        status: "error",
+        data: null,
+        message: "Rating must be between 0 and 10",
+      })
+    }
+    const updatedMovie = await Movie.findByIdAndUpdate(
+      id,
+      { rating },
+      { new: true }
+    );
+
+    if (!updatedMovie) {
+      return res.status(404).json({
+        status: "error",
+        message: "Movie not found",
+      });
+    }
+
+    res.status(200).json({
+      status: "ok",
+      message: "Movie updated successfully",
+      data: updatedMovie,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    })
+  }
+}
 
 // find by id
 const getMovieById = async (req, res) => {
@@ -147,4 +193,32 @@ const getMovieById = async (req, res) => {
   }
 };
 
-export { getMovies , postMovies ,getMovieById,getMoviesSearch ,putMoviesById};
+// delete by id
+const deleteMoviesById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deletedMovie = await Movie.findByIdAndDelete(id);
+
+    if (!deletedMovie) {
+      return res.status(404).json({
+        status: "error",
+        message: "Movie not found",
+      });
+    }
+
+    res.status(200).json({
+      status: "ok",
+      message: "Movie deleted successfully",
+      data: deletedMovie,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+};
+
+export { getMovies , postMovies ,getMovieById,getMoviesSearch ,putMoviesById ,patchMoviesRatingById ,deleteMoviesById};

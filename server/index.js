@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
-import { getMovies , postMovies ,getMovieById,getMoviesSearch,putMoviesById} from "./controllers/movies.js";
+import { getMovies , postMovies ,getMovieById,getMoviesSearch,putMoviesById,patchMoviesRatingById,deleteMoviesById} from "./controllers/movies.js";
 dotenv.config();
 
 const app = express();
@@ -32,21 +32,28 @@ app.get("/", (req, res) => {
 });
 
 // add movie
-app.post("/movie",postMovies);
+app.post("/movies",postMovies);
 
 // show all movies
 
 app.get("/movies",getMovies);
 
 // search movie
-app.get("/movie/search", getMoviesSearch);
+app.get("/movies/search", getMoviesSearch);
 
 // find by id
-app.get("/movie/:id", getMovieById);
+app.get("/movies/:id", getMovieById);
 
 // full update
-
 app.put("/movies/:id", putMoviesById);
+
+// partial update by rating
+app.patch("/movies/:id/rating", patchMoviesRatingById);
+
+// delete by id
+app.delete("/movies/:id", deleteMoviesById);
+
+
 
 const PORT = process.env.PORT || 8080;
 
