@@ -130,7 +130,7 @@ const patchMoviesRatingById =async (req, res) => {
   try{
 
     const { rating } = req.body;
-    if(rating < 0 || rating > 10){
+    if(rating < 0 || rating > 5){
       return res.status(400).json({
         status: "error",
         data: null,
