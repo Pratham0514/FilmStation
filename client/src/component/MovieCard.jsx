@@ -1,60 +1,69 @@
+import { Link } from "react-router-dom";
+import Rating from "./Rating";
+import { Trash } from "lucide-react";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
+function MovieCard({ _id, title, image, category, year, rating, loadMovies }) {
 
-function MovieCard({ _id,title, image, category, year, rating }) {
+  const deleteMovie = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8080/movies/${id}`);
+
+      toast.success("Movie Deleted Successfully");
+
+      loadMovies(); // reload movies list
+    } catch (error) {
+      console.log(error);
+      toast.error("Delete failed");
+    }
+  };
+
   return (
-    <div className="group  relative bg-gray-900 text-white rounded-2xl overflow-hidden shadow-xl  
-w-full sm:w-64 md:w-72 transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl  border-2 border-gray-800">
+      
+    <Link
+      to={`/movie/${_id}`}
+      className="group relative bg-gray-900 text-white rounded-2xl overflow-hidden shadow-xl
+      w-full sm:w-64 md:w-72 transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl border-2 border-gray-800"
+    >
 
-  {/* Movie Poster */}
-  <div className="overflow-hidden">
-    <img
-      src={image}
-      alt={title}
-      className="w-full h-80 object-cover transform group-hover:scale-110 transition duration-500"
-    />
-  </div>
+      <div className="relative overflow-hidden">
 
-  {/* Rating Badge */}
-  <div className="absolute top-3 right-3 bg-gray-400 text-black text-sm font-bold px-3 py-1 rounded-lg shadow">
-  {Array.from({ length: Math.round(rating) }, (_, index) => (
-    <span key={"full-" + index}>⭐</span>
-  ))}
+        <img
+          src={image?.[0]}
+          alt={title}
+          className="w-full h-80 object-cover"
+        />
 
-  {Array.from({ length: 5 - Math.round(rating) }, (_, index) => (
-    <span key={"empty-" + index}>☆</span>
-  ))}
-</div>
+        {/* DELETE BUTTON */}
+        <button
+          className="absolute top-3 left-3 bg-red-600 p-2 rounded-full hover:bg-red-700"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            deleteMovie(_id);
+          }}
+        >
+          <Trash size={18} className="text-white" />
+        </button>
 
-  {/* Gradient Overlay */}
-  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+      </div>
+       <div className="absolute top-3 right-3 bg-gray-300 text-black text-sm font-bold px-3 py-1 rounded-lg shadow">
+        <Rating rating={rating} />
+      </div>
 
-  {/* Movie Info */}
-  <div className="relative p-4">
+      <div className="relative p-4">
+        <h1 className="text-lg font-bold">{title}</h1>
+        <p className="text-sm text-gray-400">🎬 {category}</p>
 
-    <h1 className="text-lg font-bold truncate">
-      {title}
-    </h1>
+        <div className="flex justify-between mt-3 text-sm">
+          <span>📅 {year}</span>
+          
+        </div>
+      </div>
 
-    <p className="text-sm text-gray-400 mt-1">
-      🎬 {category}
-    </p>
-
-    <div className="flex justify-between items-center mt-3 text-sm">
-
-      <span className="text-gray-300">
-        📅 {year}
-      </span>
-
-      <span className="bg-gray-700 px-2 py-1 rounded-md text-xs">
-        Movie
-      </span>
-
-    </div>
-
-  </div>
-
-</div>
-  )
+    </Link>
+  );
 }
 
-export default MovieCard
+export default MovieCard;

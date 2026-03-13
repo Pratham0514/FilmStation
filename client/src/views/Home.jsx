@@ -86,13 +86,15 @@ useEffect(() => {
 
         return (
           <MovieCard
-            key={_id}
-            title={title}
-            image={image}
-            category={category}
-            year={year}
-            rating={rating}
-          />
+          key={_id}
+          _id={_id}
+          title={title}
+          image={image}
+          category={category}
+          year={year}
+          rating={rating}
+          loadMovies={loadMovies}
+        />
         );
       })}
 
