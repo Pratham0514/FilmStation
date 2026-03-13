@@ -2,6 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import MovieCard from "./../component/MovieCard"
 import toast, { Toaster } from 'react-hot-toast';
+import  ErrorImg  from "./../assets/error.png";
 function Home() {
    const [movies, setMovies] = useState([]);
   const [search, setSearch] = useState("");
@@ -66,10 +67,17 @@ useEffect(() => {
         onChange={(e) => setSearch(e.target.value)}
         className="block bg-gray-800 text-white px-4 py-2 rounded-lg w-full md:w-1/2 lg:w-1/3 mb-10 focus:outline-none focus:ring-2 focus:ring-blue-500 mx-auto"
       />
-    {error ? (
-      <p className="text-red-500 text-center text-2xl">{error}</p>
-    ) : null}
+   {error && (
+  <div className="text-center mt-10">
 
+    <img
+      src={ErrorImg}
+      alt="Error"
+      className="w-1/5 mx-auto mt-10"
+    />
+     <p className="text-red-500 text-2xl">{error}</p>
+  </div>
+)}
     {/* Movies Grid */}
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10">
 
