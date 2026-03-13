@@ -7,8 +7,23 @@ import Rating from "../component/Rating";
 function MovieDetails() {
 
   const { id } = useParams();
-
+//तू useState मध्ये fields लिहिले नाही तरी code चालेल, कारण actual data API कडून येतो.
   const [movieDetails, setMovieDetails] = useState(null);
+
+  {/*तू useState मध्ये fields लिहिले नाही तरी code चालेल, कारण actual data API कडून येतो.
+    if u not like this in code
+  const [movieDetails, setMovieDetails] = useState({
+  _id: "",
+  title: "",
+  description: "",
+  image: "",
+  category: "",
+  director: "",
+  writer: "",
+  year: "",
+  language: "",
+  rating: "",
+  }); */}
 
   const loadMovieDetails = async () => {
     try {
@@ -23,7 +38,6 @@ function MovieDetails() {
       console.log(error);
     }
   };
-
   useEffect(() => {
     loadMovieDetails();
   }, [id]);
@@ -34,6 +48,21 @@ function MovieDetails() {
         Loading...
       </div>
     );
+  }
+
+
+  const handleRatingClick = async (newRating) => {
+    try {
+      setMovieDetails({
+                ...movieDetails,
+                rating: newRating
+              });
+      await axios.patch(`http://localhost:8080/movies/${id}/rating`, { rating : newRating });
+      
+      loadMovieDetails();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -83,10 +112,14 @@ function MovieDetails() {
               {movieDetails.language}
             </p>
 
-            <div className="text-yellow-400 text-lg">
-              <Rating rating={movieDetails.rating} />
-            </div>
-
+         <div className="text-yellow-400 text-lg">
+          <Rating
+            rating={movieDetails.rating}
+            onClick={(newRating) => {
+              handleRatingClick(newRating);
+            }}
+          />
+        </div>
           </div>
 
           <button className="mt-6 bg-red-600 hover:bg-red-700 px-6 py-2 rounded-lg transition">
