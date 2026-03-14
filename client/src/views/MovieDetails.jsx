@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Rating from "../component/Rating";
-
+import {Link} from "react-router-dom"
 
 function MovieDetails() {
 
@@ -125,6 +125,10 @@ function MovieDetails() {
           <button className="mt-6 bg-red-600 hover:bg-red-700 px-6 py-2 rounded-lg transition">
             ▶ Watch Trailer
           </button>
+
+          <Link to={`/movie/edit/${movieDetails._id}`} className="mt-6 bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg transition">
+            Edit Movie
+          </Link>
 
         </div>
 

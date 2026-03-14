@@ -1,10 +1,13 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import {CopyPlus} from "lucide-react"
 import {Trash} from "lucide-react"
 import axios from "axios"
 import {toast} from "react-hot-toast"
-function NewMovie() {
+function EditMovie() {
+    const { id } = useParams();
     const [movieDetails, setMovieDetails] = useState({
+  _id: "",
   title: "",
   description: "",
   image: [],
@@ -17,9 +20,9 @@ function NewMovie() {
   NewMoviePoater: "",
   });
 
-const addMovie = async () => {
+const EditMovie = async () => {
   try {
-    const response = await axios.post("http://localhost:8080/movies", movieDetails);
+    const response = await axios.put(`http://localhost:8080/movies/${id}`, movieDetails);
     toast.success(response.data.message);
     console.log(response.data);
     setTimeout(() => {
@@ -29,15 +32,32 @@ const addMovie = async () => {
     console.log(error);
   }
 };
+ const loadMovieDetails = async () => {
+    try {
 
+      const response = await axios.get(
+        `http://localhost:8080/movies/${id}`
+      );
+
+      setMovieDetails(response.data.data);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+useEffect(() => {
+  if (id) {
+    loadMovieDetails();
+  }
+}, [id]);
   return (
    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-black via-gray-900 to-black p-6">
 
   <div className="w-full max-w-lg bg-gray-900 text-white rounded-2xl shadow-2xl p-8">
 
-    <h1 className="text-3xl font-bold text-center mb-6">
-      🎬 Add New Movie
-    </h1>
+   <h1 className="text-3xl font-bold text-center mb-6">
+  ✏️ Edit Movie
+</h1>
 
     <div className="space-y-4">
 
@@ -91,9 +111,20 @@ const addMovie = async () => {
             className="flex-1 p-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:border-red-500 text-white"
         />
 
-        <button className="bg-red-600 hover:bg-red-700 p-3 rounded-lg transition">
-            <CopyPlus size={20} onClick={() => setMovieDetails({ ...movieDetails, image: [...movieDetails.image, movieDetails.NewMoviePoater] })} />
-        </button>
+       <button
+  className="bg-red-600 hover:bg-red-700 p-3 rounded-lg transition"
+  onClick={() => {
+    if (!movieDetails.NewMoviePoater) return;
+
+    setMovieDetails({
+      ...movieDetails,
+      image: [...movieDetails.image, movieDetails.NewMoviePoater],
+      NewMoviePoater: ""   // input clear
+    });
+  }}
+>
+  <CopyPlus size={20} />
+</button>
         </div>
       <input
         type="text"
@@ -143,15 +174,20 @@ const addMovie = async () => {
         type="number"
         placeholder="Rating"
         value={movieDetails.rating}
-        onChange={(e) => setMovieDetails({ ...movieDetails, rating: e.target.value })}
+        onChange={(e) =>
+  setMovieDetails({
+    ...movieDetails,
+    rating: Number(e.target.value),
+  })
+}
         className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:border-red-500"
       />
 
       <button
         className="w-full bg-red-600 hover:bg-red-700 transition p-3 rounded-lg font-semibold"
-        onClick={addMovie}
+        onClick={EditMovie}
       >
-        ➕ Add Movie
+         Edit Movie
       </button>
 
     </div>
@@ -162,4 +198,4 @@ const addMovie = async () => {
   )
 }
 
-export default NewMovie
+export default EditMovie
