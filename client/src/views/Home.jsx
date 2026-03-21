@@ -12,7 +12,7 @@ function Home() {
 
   // Load all movies
   const loadMovies = async () => {
-    const response = await axios.get("http://localhost:8080/movies");
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/movies`);
     setMovies(response.data.data);
   };
 
@@ -27,7 +27,7 @@ const searchMovies = async () => {
     toast.loading("Searching...", { id: "searching" });
 
     const response = await axios.get(
-      `http://localhost:8080/movies/search?title=${search}`
+      `${import.meta.env.VITE_API_URL}/movies/search?title=${search}`
     );
 
     toast.dismiss("searching");

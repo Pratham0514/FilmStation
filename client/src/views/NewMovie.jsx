@@ -18,7 +18,7 @@ function NewMovie() {
 
 const addMovie = async () => {
   try {
-    const response = await axios.post("http://localhost:8080/movies", movieDetails);
+    const response = await axios.post(`${import.meta.env.VITE_API_URL}/movies`, movieDetails);
     toast.success(response.data.message);
     console.log(response.data);
     setTimeout(() => {

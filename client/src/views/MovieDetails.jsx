@@ -57,7 +57,7 @@ function MovieDetails() {
                 ...movieDetails,
                 rating: newRating
               });
-      await axios.patch(`http://localhost:8080/movies/${id}/rating`, { rating : newRating });
+      await axios.patch(`${import.meta.env.VITE_API_URL}/movies/${id}/rating`, { rating : newRating });
       
       loadMovieDetails();
     } catch (error) {

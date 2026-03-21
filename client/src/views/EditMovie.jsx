@@ -36,7 +36,7 @@ const EditMovie = async () => {
     try {
 
       const response = await axios.get(
-        `http://localhost:8080/movies/${id}`
+        `${import.meta.env.VITE_API_URL}/movies/${id}`
       );
 
       setMovieDetails(response.data.data);
