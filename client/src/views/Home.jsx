@@ -1,9 +1,10 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
-import MovieCard from "./../component/MovieCard"
+import axios from "axios";
+import { useEffect, useState } from "react";
+import MovieCard from "./../component/MovieCard";
 import toast, { Toaster } from 'react-hot-toast';
 import  ErrorImg  from "./../assets/error.png";
 import { Link } from "react-router-dom";
+import {API_URL} from "./../constants";
 function Home() {
    const [movies, setMovies] = useState([]);
   const [search, setSearch] = useState("");
@@ -12,7 +13,7 @@ function Home() {
 
   // Load all movies
   const loadMovies = async () => {
-    const response = await axios.get(`${import.meta.env.VITE_API_URL}/movies`);
+    const response = await axios.get(`${API_URL}/movies`);
     setMovies(response.data.data);
   };
 
@@ -58,8 +59,12 @@ useEffect(() => {
     <h1 className="text-4xl md:text-5xl font-bold text-white mb-10 text-center tracking-wide">
       🎥 Movies 🍿
     </h1>
-     <Link to="/newmovie" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline absolute top-4 right-4 r-4"> Add New Movie</Link>
-
+    <Link
+  to="/newmovie"
+  className=" bg-blue-500 hover:bg-blue-700 text-white font-bold  py-2 px-4 rounded focus:outline-none focus:shadow-outline absolute top-2 right-2 md:top-6 md:right-6 text-sm md:text-base /* font adjust */ px-3 py-2 md:px-4 md:py-2 z-50"
+>
+  + Add
+</Link>
     {/* Search Box */}
     {/* Search Input */}
       <input

@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import {CopyPlus} from "lucide-react"
-import {Trash} from "lucide-react"
-import axios from "axios"
-import {toast} from "react-hot-toast"
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import {CopyPlus} from "lucide-react";
+import {Trash} from "lucide-react";
+import axios from "axios";
+import {toast} from "react-hot-toast";
+import {API_URL} from "./../constants";
 function EditMovie() {
     const { id } = useParams();
     const [movieDetails, setMovieDetails] = useState({
@@ -22,7 +23,7 @@ function EditMovie() {
 
 const EditMovie = async () => {
   try {
-    const response = await axios.put(`http://localhost:8080/movies/${id}`, movieDetails);
+    const response = await axios.put(`${API_URL}/movies/${id}`, movieDetails);
     toast.success(response.data.message);
     console.log(response.data);
     setTimeout(() => {
@@ -36,7 +37,7 @@ const EditMovie = async () => {
     try {
 
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/movies/${id}`
+        `${API_URL}/movies/${id}`
       );
 
       setMovieDetails(response.data.data);

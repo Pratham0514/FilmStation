@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Rating from "../component/Rating";
 import {Link} from "react-router-dom"
-
+import {API_URL} from "./../constants";
 function MovieDetails() {
 
   const { id } = useParams();
@@ -57,7 +57,7 @@ function MovieDetails() {
                 ...movieDetails,
                 rating: newRating
               });
-      await axios.patch(`${import.meta.env.VITE_API_URL}/movies/${id}/rating`, { rating : newRating });
+      await axios.patch(`${API_URL}/movies/${id}/rating`, { rating : newRating });
       
       loadMovieDetails();
     } catch (error) {
