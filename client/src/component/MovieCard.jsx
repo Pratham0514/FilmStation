@@ -3,12 +3,12 @@ import Rating from "./Rating";
 import { Trash } from "lucide-react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import {API_URL} from "./../constants";
+
 function MovieCard({ _id, title, image, category, year, rating, loadMovies }) {
 
   const deleteMovie = async (id) => {
     try {
-      await axios.delete(`${API_URL}/movies/${id}`);
+      await axios.delete(`${import.meta.env.VITE_API_URL}/movies/${id}`);
 
       toast.success("Movie Deleted Successfully");
 

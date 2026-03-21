@@ -3,7 +3,6 @@ import {CopyPlus} from "lucide-react"
 import {Trash} from "lucide-react"
 import axios from "axios"
 import {toast} from "react-hot-toast"
-import {API_URL} from "./../constants";
 function NewMovie() {
     const [movieDetails, setMovieDetails] = useState({
   title: "",
@@ -19,7 +18,7 @@ function NewMovie() {
 
 const addMovie = async () => {
   try {
-    const response = await axios.post(`${API_URL}/movies`, movieDetails);
+    const response = await axios.post(`${import.meta.env.VITE_API_URL}/movies`, movieDetails);
     toast.success(response.data.message);
     console.log(response.data);
     setTimeout(() => {

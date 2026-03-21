@@ -4,7 +4,7 @@ import {CopyPlus} from "lucide-react";
 import {Trash} from "lucide-react";
 import axios from "axios";
 import {toast} from "react-hot-toast";
-import {API_URL} from "./../constants";
+
 function EditMovie() {
     const { id } = useParams();
     const [movieDetails, setMovieDetails] = useState({
@@ -23,7 +23,7 @@ function EditMovie() {
 
 const EditMovie = async () => {
   try {
-    const response = await axios.put(`${API_URL}/movies/${id}`, movieDetails);
+    const response = await axios.put(`${import.meta.env.VITE_API_URL}/movies/${id}`, movieDetails);
     toast.success(response.data.message);
     console.log(response.data);
     setTimeout(() => {
@@ -37,7 +37,7 @@ const EditMovie = async () => {
     try {
 
       const response = await axios.get(
-        `${API_URL}/movies/${id}`
+        `${import.meta.env.VITE_API_URL}/movies/${id}`
       );
 
       setMovieDetails(response.data.data);
