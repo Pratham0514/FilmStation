@@ -10,7 +10,6 @@ function NewMovie() {
   image: [],
   category: "",
   director: "",
-  writer: "",
   year: "",
   language: "",
   rating: 0,
@@ -108,14 +107,6 @@ const addMovie = async () => {
         placeholder="Director"
         value={movieDetails.director}
         onChange={(e) => setMovieDetails({ ...movieDetails, director: e.target.value })}
-        className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:border-red-500"
-      />
-
-      <input
-        type="text"
-        placeholder="Writer"
-        value={movieDetails.writer}
-        onChange={(e) => setMovieDetails({ ...movieDetails, writer: e.target.value })}
         className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:border-red-500"
       />
 

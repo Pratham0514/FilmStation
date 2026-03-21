@@ -48,8 +48,8 @@ function MovieCard({ _id, title, image, category, year, rating, loadMovies }) {
         </button>
 
       </div>
-       <div className="absolute top-3 right-3 bg-gray-300 text-black text-sm font-bold px-3 py-1 rounded-lg shadow">
-        <Rating rating={rating} />
+       <div className="absolute top-2 right-2 bg-gray-300 text-black  px-1 py-1 rounded-lg shadow">
+        <Rating rating={rating}/>
       </div>
 
       <div className="relative p-4">

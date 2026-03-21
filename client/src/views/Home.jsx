@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import MovieCard from "./../component/MovieCard"
 import toast, { Toaster } from 'react-hot-toast';
 import  ErrorImg  from "./../assets/error.png";
+import { Link } from "react-router-dom";
 function Home() {
    const [movies, setMovies] = useState([]);
   const [search, setSearch] = useState("");
@@ -57,6 +58,7 @@ useEffect(() => {
     <h1 className="text-4xl md:text-5xl font-bold text-white mb-10 text-center tracking-wide">
       🎥 Movies 🍿
     </h1>
+     <Link to="/newmovie" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline absolute top-4 right-4 r-4"> Add New Movie</Link>
 
     {/* Search Box */}
     {/* Search Input */}
@@ -78,6 +80,7 @@ useEffect(() => {
      <p className="text-red-500 text-2xl">{error}</p>
   </div>
 )}
+ 
     {/* Movies Grid */}
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10">
 
