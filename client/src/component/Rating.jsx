@@ -27,7 +27,7 @@ function Rating({ rating = 0, onClick }) {
         return (
           <span
             key={index}
-            className="cursor-pointer text-xl"
+             className="cursor-pointer text-sm md:text-lg lg:text-xl"
             onClick={() => onClick(value)}
           >
             {value <= rating ? "⭐" : "☆"}
