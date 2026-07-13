@@ -113,11 +113,9 @@ function MovieDetails() {
             </p>
 
          <div className="text-yellow-400 text-lg">
-          <Rating
+         <Rating
             rating={movieDetails.rating}
-            onClick={(newRating) => {
-              handleRatingClick(newRating);
-            }}
+            onChange={handleRatingClick}
           />
         </div>
           </div>

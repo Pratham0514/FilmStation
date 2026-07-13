@@ -134,7 +134,7 @@ const patchMoviesRatingById =async (req, res) => {
       return res.status(400).json({
         status: "error",
         data: null,
-        message: "Rating must be between 0 and 10",
+        message: "Rating must be between 0 and 5",
       })
     }
     const updatedMovie = await Movie.findByIdAndUpdate(
